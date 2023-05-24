@@ -1,0 +1,34 @@
+IMV #1
+
+.loop1
+TXA R2
+TXA R3
+ADD R1
+
+IAT .end
+BRC
+
+IAH #1
+IAL #0
+STR
+
+TXA R1
+TXA R3
+ADD R2
+
+IAT .end
+BRC
+
+IAH #1
+IAL #0
+STR
+
+IAT .loop1
+JMP
+
+.end
+RXA R3
+IAH #1
+IAL #0
+STR
+HLT
