@@ -12,13 +12,15 @@ unsigned short RamChip256::busReadRequested(unsigned short busAddress)
 }
 
 // Write request
-void RamChip256::busWriteRequested(unsigned short busAddress, unsigned short busValue)
+std::string RamChip256::busWriteRequested(unsigned short busAddress, unsigned short busValue)
 {
-    if (noWrite) return;
+    if (noWrite) return "";
 
     if ((busAddress >> 8) == addressUpper) {
-        memory[busAddress & 256] = busValue;
+        memory[busAddress & 255] = busValue;
+        return "Written: " + std::to_string(busValue) + " @ " + std::to_string(busAddress);
     }
+    return "";
 }
 
 // Peek a specific address at any time
@@ -46,7 +48,7 @@ void RamChip256::dump() {
 // Initialize chip with data
 void RamChip256::init(std::vector<unsigned short> initialValues)
 {
-    for (int i = 0; i < initialValues.size(); i++) {
+    for (int i = 0; i < std::min((int)initialValues.size(), 256); i++) {
         memory[i] = initialValues[i];
     }
 }

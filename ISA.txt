@@ -1,0 +1,177 @@
+===== INSTRUCTION SET =====
+
+--------+-----+-----+----------+----------------------------------
+ Opcode | Ins | Reg | Operand  | Function
+--------+-----------+----------+----------------------------------
+ 00000  | NOP | XXX |          | No Operation
+ 00001  | IMH | XXX | IIIIIIII | Immediate High
+ 00010  | IML | XXX | IIIIIIII | Immediate Low
+ 00011  | LOD | XXX |          | Load from bus
+ 00100  | STR | XXX |          | Store to bus
+ 00101  | TXA | RRR |          | Transmit Accumulator
+ 00110  | RXA | RRR |          | Receive Accumulator
+ 00111  | CLA | XXX |          | Clear Accumulator
+ 01000  | JMP | XXX |          | Jump Unconditionally
+ 01001  | RAL | RRR |          | Register Address Load
+ 01010  | AAL | XXX |          | Accumulator Address Load
+ 01011  | IAH | XXX | IIIIIIII | Immediate Address High
+ 01100  | IAL | XXX | IIIIIIII | Immediate Address Low
+ 01101  | CLI | XXX |          | Clear Interrupt
+ 01110  | BRI | XXX |          | Branch if Interrupt
+ 01111  | INC | XXX |          | Increment Accumulator
+ 10000  | ADD | RRR |          | Add
+ 10001  | SUB | RRR |          | Subtract
+ 10010  | ORR | RRR |          | Logical OR
+ 10011  | AND | RRR |          | Logical AND
+ 10100  | XOR | RRR |          | Logical XOR
+ 10101  | RSH | XXX |          | Right Shift
+ 10110  | LSH | XXX |          | Left Shift
+ 10111  | ADC | RRR |          | Add Using Carry
+ 11000  | BRZ | XXX |          | Branch if Zero Flag
+ 11001  | BRC | XXX |          | Branch if Carry Flag
+ 11010  | CLF | XXX |          | Clear Flags
+ 11011  | PJP | XXX |          | Pointer Jump
+ 11100  | AJP | XXX |          | Accumulator Jump
+ 11101  | PKA | XXX |          | Peek Address (Address register -> accumulator)
+ 11110  | DEC | XXX |          | Decrement Accumulator
+ 11111  | HLT | XXX |          | Halt
+--------+-----------+----------+----------------------------------
+
+===== MICRO-OPS =====
+----+--------------------
+ PA | PC Addressing
+ IL | Instruction Load
+ OL | Operand Low Output
+ AH | Address Register High Input
+ RO | Register Output
+ RI | Register Input
+ AO | Accumulator Output
+ AI | Accumulator Input
+ AR | Address Register Input
+ AL | Address Register Low Input
+ PC | Program Counter Input
+ SL | Storage (Accumulator) Input Low
+ JO | Jump Output (Address Register Output)
+ MI | Math Input
+ BO | Bus Output
+ BI | Bus Input
+----+--------------------
+ OR | ALU OR
+ FC | ALU Flood Carry
+ IA | ALU Invert Accumulator
+ IB | ALU Invert B
+ LS | ALU Left Shift
+ RS | ALU Right Shift
+ CI | ALU Carry In
+ CR | ALU Carry Rollover
+ EC | Execute if Carry
+ EZ | Execute if Zero
+ EI | Execute if Interrupt
+ IM | Interrupt Mask
+ CH | Clock Halt
+ PI | PC Increment
+ CF | Clear Flags
+ AS | Action Step
+----+--------------------
+
+===== TECHNICAL DETAILS =====
+
+16-bit accumulator-based load-store architecture
+8* GPRs and some fixed utility registers
+Built-in maskable interrupt handling
+
+GPR map:
+R0 - Zero
+R1 - A
+R2 - B
+R3 - X
+R4 - Y
+R5 - T (temp recommended)
+R6 - U (temp recommended)
+R7 - S (stack pointer recommended)
+
+Fixed registers:
+  Register Selector Register (3-bit)
+  Bus Address Register
+  Interrupt Register (1 bit)
+  Program Counter
+  Instruction Register
+  State Register (1 bit)
+
+Instruction Decoding:
+  Instructions stored as little endian 16-bit numbers, operand then opcode/reg (so IMH 0xFA would be 0xFA08 in the .bin and 16-bit ROM)
+  4 clock cycles per opcode
+  1 clock cycle per micro-op
+  ops stored bitwise, allowing up to 16 parallel micro-ops
+    2 micro-op sets (see table above)
+	  I/O ops
+	  Execution ops
+	some micro-ops run on clock rising edge, some on falling edge
+  2 clock cycles fetch/decode the instruction
+  2 clock cycles run the instruction
+  instruction order: 1-2 1-2
+
+Pins (on Digilent's Cmod A7 FPGA board):
+
+1   CLK +---|__|---+ RES* 48
+2  SYNC |          | NMI  47
+3  R/W* |          | RDY  46
+4       |          |      45
+5   A 0 |          | D15  44
+6   A 1 |          | D14  43
+7   A 2 |          | D13  42
+8   A 3 |          | D12  41
+9   A 4 |          | D11  40
+10  A 5 |          | D10  39
+11  A 6 |          | D9   38
+12  A 7 |          | D8   37
+13  A 8 |          | D7   36
+14  A 9 |          | D6   35
+15      |          | D5   34
+16      |          | D4   33
+17  A10 |          | D3   32
+18  A11 |          | D2   31
+19  A12 |          | D1   30
+20  A13 |          | D0   29
+21  A14 |          |      28
+22  A15 |          |      27
+23      |          |      26
+24  VCC +----------+ GND  25
+
+========== MICROCODE ==========
+00000 - NOP -       - 
+00001 - IMH - OL,AI - AS
+00010 - IML - OL,SL - AS
+00011 - LOD - BO,AI - AS
+00100 - STR - AO,BI - AS
+00101 - TXA - AO,RI - AS
+00110 - RXA - RO,AI - AS
+00111 - CLA - AI    - AS
+01000 - JMP - JO,PC - AS
+01001 - RAL - RO,AR - AS
+01010 - AAL - AO,AR - AS
+01011 - IAH - OL,AH - AS
+01100 - IAL - OL,AL - AS
+01101 - CLI -       - IM,AS
+01110 - BRI - JO,PC - EI
+01111 - INC -    MI - CI,AS	
+10000 - ADD - RO,MI - AS
+10001 - SUB - RO,MI - IB,CI,AS
+10010 - ORR - RO,MI - OR,AS
+10011 - AND - RO,MI - OR,FC,IA,IB,AS
+10100 - XOR - RO,MI - IA,FC,AS
+10101 - RSH -    MI - RS,AS
+10110 - LSH -    MI - LS,AS
+10111 - ADC - RO,MI - CR,AS
+11000 - BRZ - JO,PC - EZ
+11001 - BRC - JO,PC - EC
+11010 - CLF -       - CF,AS
+11011 - PJP - BO,PC - AS
+11100 - AJP - AO,PC - AS
+11101 - PKA - JO,AI - AS
+11110 - DEC -    MI - IB,AS
+11111 - HLT -       - CH
+
+
+INSTRUCTION LOADING MICROCODE
+PA,IL - PI,AS

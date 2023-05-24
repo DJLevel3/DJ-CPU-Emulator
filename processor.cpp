@@ -219,8 +219,7 @@ void Processor::dumpState() {
     std::ostringstream acc;
     acc << "    " << accumulator << " | 0x" << int_to_hex(accumulator, 4) << " | 0b" << int_to_bin(accumulator, 16) << std::endl;
 
-    std::ostringstream gprs, gpr1, gpr2, gpr3, gpr4, gpr5, gpr6, gpr7;
-    gprs << "GPRs: " << std::endl;
+    std::ostringstream gpr1, gpr2, gpr3, gpr4, gpr5, gpr6, gpr7;
     gpr1 << "    1 - " << gpr[1] << std::endl;
     gpr2 << "    2 - " << gpr[2] << std::endl;
     gpr3 << "    3 - " << gpr[3] << std::endl;
@@ -232,6 +231,9 @@ void Processor::dumpState() {
     std::ostringstream ins;
     ins << "Instruction: " << binToOp.at(instructionRegister >> 11);
 
+    std::ostringstream bar;
+    bar << busAddressRegister;
+
     std::ostringstream pc;
     pc << "    " << programCounter << std::endl;
 
@@ -241,7 +243,7 @@ void Processor::dumpState() {
             text("Accumulator Value: "),
             text(acc.str()),
             text(""),
-            text(gprs.str()),
+            text("GPRs: "),
             text(gpr1.str()),
             text(gpr2.str()),
             text(gpr3.str()),
@@ -254,6 +256,9 @@ void Processor::dumpState() {
             text(pc.str()),
             text(""),
             text(ins.str()),
+            text(""),
+            text("Bus Address Register: "),
+            text(bar.str()),
             text(""),
             text(message1),
             text(message2),

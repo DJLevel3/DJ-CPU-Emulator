@@ -12,7 +12,7 @@ public:
     bool noRead = false;
 
     unsigned short busReadRequested(unsigned short busAddress);
-    void busWriteRequested(unsigned short busAddress, unsigned short busValue);
+    std::string busWriteRequested(unsigned short busAddress, unsigned short busValue);
 
     unsigned short peek(unsigned char address);
     void poke(unsigned char address, unsigned short value);

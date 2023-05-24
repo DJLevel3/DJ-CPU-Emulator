@@ -25,7 +25,7 @@ JMP
 
 .end
 RXA R1
-IAH #1
+IAH #128
 IAL #0
 STR
 HLT

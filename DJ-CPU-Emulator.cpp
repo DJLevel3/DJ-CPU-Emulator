@@ -15,30 +15,35 @@ const bool gui = false;
 // Slow down execution
 const bool slowDown = false;
 
+// Dump zero page after execution ends
+const bool dumpZeroPage = true;
+
 // How much to wait between instructions
-const int timescale = 1;
+const int timescale = 500;
 
 // Filename to read .asm and write .bin
-const std::string file = "div";
+const std::string file = "start";
 
 // Bus write event
 void writeBus(unsigned short address, unsigned short value)
 {
-    page0.busWriteRequested(address, value);
-    std::string str = portOut.busWriteRequested(address, value);
-    if (str != "") processor.message1 = str;
-    //page1.busWriteRequested(address, value);
-    page2.busWriteRequested(address, value);
+    std::string str;
+    for (int i = 0; i < 8; i++) {
+        str = lowPages[i].busWriteRequested(address, value);
+        if (str != "") processor.message2 = str;
+    }
     page254.busWriteRequested(address, value);
     page255.busWriteRequested(address, value);
+
+    str = portOut.busWriteRequested(address, value);
+    if (str != "") processor.message1 = str;
 }
 
 // Bus read event
 unsigned short readBus(unsigned short address)
 {
-    unsigned short bus = page0.busReadRequested(address);
-    //bus = bus | page1.busReadRequested(address);
-    bus = bus | page2.busReadRequested(address);
+    unsigned short bus = 0;
+    for (int i = 0; i < 8; i++) bus = bus | lowPages[i].busReadRequested(address);
     bus = bus | page254.busReadRequested(address);
     bus = bus | page255.busReadRequested(address);
     return bus;
@@ -119,12 +124,26 @@ int main()
     for (int i = 0; i < prog.size(); i++) {
         binTemp.push_back(prog.nextBin());
     }
+    if (binTemp.size() > 2048) {
+        std::cout << "Assembled binary too large to fit in first 8 pages of RAM!" << std::endl;
+        return 2;
+    }
 
-    // Populate the zero page
-    page0.init(binTemp);
+    // Populate the low pages
+    int page = 0;
+    int s = binTemp.size();
+    while (s > 0) {
+        lowPages[page].init(binTemp);
+        if (s >= 256) binTemp.erase(binTemp.begin(), binTemp.begin() + 256);
+        else binTemp.clear();
+        s = binTemp.size();
+        page++;
+    }
+
+    // Dump the zero page before execution
     if (verbose) {
         std::cout << "Contents of Zero Page:" << std::endl;
-        page0.dump();
+        lowPages[0].dump();
     }
 
     // Run the program
@@ -139,6 +158,10 @@ int main()
         std::cout << std::endl << processor.message1 << std::endl;
         std::cout << processor.message2 << std::endl;
     }
+
+    // Dump the zero page after execution
+    std::cout << std::endl;
+    if (dumpZeroPage) lowPages[0].dump();
 
     return 0;
 }

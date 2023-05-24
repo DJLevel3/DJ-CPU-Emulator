@@ -149,9 +149,14 @@
     <ClInclude Include="ramchip.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="start.asm" />
     <None Include="div.asm" />
     <None Include="fib.asm" />
     <None Include="pi.asm" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ISA.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
