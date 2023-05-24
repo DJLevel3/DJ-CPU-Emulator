@@ -1,7 +1,7 @@
 IMV #0
 TXA R1
 
-IMV #3
+IMV #51
 TXA R2
 
 IMV #65535

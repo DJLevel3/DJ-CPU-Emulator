@@ -5,9 +5,12 @@
 
 const bool verbose = true;
 const bool writeOut = false;
+const bool gui = true;
 const bool slowDown = false;
 
-const int timescale = 100;
+const int timescale = 1;
+
+const std::string file = "div";
 
 void writeBus(unsigned short address, unsigned short value)
 {
@@ -52,8 +55,10 @@ int main()
     if (verbose) std::cout << "Setup Finish!" << std::endl << "Assembler Start!" << std::endl;
 
     std::vector<std::string> asmVector;
-    std::string asmString("");
-    std::ifstream asmFile("div.asm", std::ios_base::in);
+    std::string asmString;
+    asmString = file + ".asm";
+    std::ifstream asmFile(asmString, std::ios_base::in);
+    asmString.clear();
     int i = 0;
     if (asmFile.is_open()) {
         while (std::getline(asmFile, asmString)) {
@@ -83,10 +88,12 @@ int main()
     if (verbose) {
         std::cout << "Assembled Binary: (begins after leading NOPs)" << std::endl;
         prog.printBin();
+        std::cout << std::endl << std::endl;
     }
 
     if (writeOut) {
-        prog.writeFile("test.bin");
+        asmString = file + ".bin";
+        prog.writeFile(asmString);
         if (verbose) std::cout << "Assembly written!" << std::endl;
     }
 
@@ -97,17 +104,18 @@ int main()
     }
 
     page0.init(binTemp);
-    if (verbose) page0.dump();
+    if (verbose) {
+        std::cout << "Contents of Zero Page:" << std::endl;
+        page0.dump();
+    }
 
     while (!processor.halt) {
         runClock();
-        if (processor.processorState == 0 && slowDown) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(timescale));
-            processor.dumpState();
-        }
+        if (processor.processorState == 0 && gui) processor.dumpState();
+        if (slowDown) std::this_thread::sleep_for(std::chrono::milliseconds(timescale));
     }
 
-    if (!slowDown) {
+    if (!gui) {
         std::cout << std::endl << processor.message1 << std::endl;
         std::cout << processor.message2 << std::endl;
     }
