@@ -1,5 +1,6 @@
 #include "ramchip.h"
 
+// Read request
 unsigned short RamChip256::busReadRequested(unsigned short busAddress) 
 {
     if (noRead) return 0;
@@ -10,6 +11,7 @@ unsigned short RamChip256::busReadRequested(unsigned short busAddress)
     return 0;
 }
 
+// Write request
 void RamChip256::busWriteRequested(unsigned short busAddress, unsigned short busValue)
 {
     if (noWrite) return;
@@ -19,16 +21,19 @@ void RamChip256::busWriteRequested(unsigned short busAddress, unsigned short bus
     }
 }
 
+// Peek a specific address at any time
 unsigned short RamChip256::peek(unsigned char address)
 {
     return memory.at(address);
 }
 
+// Modify a specific address at any time
 void RamChip256::poke(unsigned char address, unsigned short value)
 {
     memory[address] = value;
 }
 
+// Dump out the whole contents of the chip in hexadecimal
 void RamChip256::dump() {
     for (int i = 0; i < 256; i += 16) {
         for (int j = i; j < i + 16; j++) {
@@ -38,7 +43,7 @@ void RamChip256::dump() {
     }
 }
 
-
+// Initialize chip with data
 void RamChip256::init(std::vector<unsigned short> initialValues)
 {
     for (int i = 0; i < initialValues.size(); i++) {

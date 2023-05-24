@@ -101,6 +101,7 @@ unsigned short Program::nextBin()
     return ret;
 }
 
+// Convert from parsed code to assembly
 void Program::assemble()
 {
     if (!parsed) parse();
@@ -114,6 +115,7 @@ void Program::assemble()
     assembled = true;
 }
 
+// Convert from read code to parsed code, handling special macros
 void Program::parse()
 {
     currentInstruction = 0;
@@ -250,6 +252,7 @@ void Program::parse()
     parsed = true;
 }
 
+// Print out parsed code, starting at first useful instruction
 void Program::printCode()
 {
     bool intro = true;
@@ -259,6 +262,7 @@ void Program::printCode()
     }
 }
 
+// Print out assembled binary, starting at first useful instruction
 void Program::printBin()
 {
     bool intro = true;
@@ -274,6 +278,7 @@ void Program::printBin()
     }
 }
 
+// Write binary to file
 void Program::writeFile(std::string fname)
 {
     std::ofstream file;

@@ -15,6 +15,7 @@
 
 using namespace ftxui;
 
+// Which operations have no operand
 const std::map<std::string, bool> noOperand = {
     {"NOP", false},
     {"LOD", false},
@@ -37,6 +38,7 @@ const std::map<std::string, bool> noOperand = {
     {"HLT", false},
 };
 
+// Instruction to opcode binary
 const std::map<std::string, unsigned char> opToBin = {
     {"NOP", 0b00000},
     {"IMH", 0b00001},
@@ -72,6 +74,7 @@ const std::map<std::string, unsigned char> opToBin = {
     {"HLT", 0b11111}
 };
 
+// Opcode binary to instruction
 const std::map<unsigned char, std::string> binToOp = {
     {0b00000, "NOP"},
     {0b00001, "IMH"},
@@ -107,6 +110,7 @@ const std::map<unsigned char, std::string> binToOp = {
     {0b11111, "HLT"}
 };
 
+// Integer to hexadecimal
 template< typename T >
 std::string int_to_hex(T i, int width)
 {
@@ -117,6 +121,7 @@ std::string int_to_hex(T i, int width)
     return stream.str();
 }
 
+// Integer to binary
 template<typename T>
 std::string int_to_bin(T i, int width)
 {
@@ -126,6 +131,7 @@ std::string int_to_bin(T i, int width)
     return r;
 }
 
+// One instruction, holding opcode, register, and operand
 class Instruction {
 public:
     Instruction(std::string opcode, unsigned char reg, unsigned short operand)
@@ -157,6 +163,7 @@ private:
     void encode();
 };
 
+// A program, holding many Instruction() objects and other useful stuff
 class Program {
 public:
     std::vector<std::string> code;

@@ -4,6 +4,7 @@
 #include <chrono>
 #include <thread>
 
+// Template Port
 class Port {
 public:
     unsigned short busAddress;
@@ -20,12 +21,14 @@ protected:
     unsigned short memory;
 };
 
+// Output Writer
 class Output : public Port {
     using Port::Port;
 public:
     std::string busWriteRequested(unsigned short busAddress, unsigned short busValue);
 };
 
+// Input Reader
 class Input : public Port {
     using Port::Port;
 public:

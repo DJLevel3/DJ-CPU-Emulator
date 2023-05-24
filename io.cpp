@@ -1,5 +1,6 @@
 #include "io.h"
 
+// Handle Output on Bus Write
 std::string Output::busWriteRequested(unsigned short busAddress, unsigned short busValue) {
     if (busAddress != this->busAddress) return "";
 
@@ -10,6 +11,7 @@ std::string Output::busWriteRequested(unsigned short busAddress, unsigned short 
     return out.str();
 }
 
+// Handle Input on Bus Read
 unsigned short Input::busReadRequested(unsigned short busAddress) {
     if (busAddress != this->busAddress) return 0;
 
