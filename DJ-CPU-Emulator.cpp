@@ -21,8 +21,11 @@ const bool dumpZeroPage = true;
 // How much to wait between instructions
 const int timescale = 500;
 
-// Filename to read .asm and write .bin
-const std::string file = "start";
+// Filename to read assembly from
+const std::string asmFile = "start.asm";
+
+// Filename to write binary to
+const std::string binFile = "out.bin";
 
 // Bus write event
 void writeBus(unsigned short address, unsigned short value)
@@ -74,16 +77,14 @@ int main()
     // Reading assembly file to a string
     std::vector<std::string> asmVector;
     std::string asmString;
-    asmString = file + ".asm";
-    std::ifstream asmFile(asmString, std::ios_base::in);
-    asmString.clear();
+    std::ifstream file(asmFile, std::ios_base::in);
     int i = 0;
-    if (asmFile.is_open()) {
-        while (std::getline(asmFile, asmString)) {
+    if (file.is_open()) {
+        while (std::getline(file, asmString)) {
             asmVector.push_back(asmString);
             if (verbose) std::cout << asmString << std::endl;
         }
-        asmFile.close();
+        file.close();
     }
     else {
         if (verbose) std::cout << "Failed to read file" << std::endl;
@@ -113,8 +114,7 @@ int main()
 
     // Write the binary to a file
     if (writeOut) {
-        asmString = file + ".bin";
-        prog.writeFile(asmString);
+        prog.writeFile(binFile);
         if (verbose) std::cout << "Assembly written!" << std::endl;
     }
 
