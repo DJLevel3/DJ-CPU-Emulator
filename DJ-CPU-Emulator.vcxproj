@@ -78,6 +78,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>C:\Users\DJ_Level_3\source\repos\DJ-CPU-Emulator\Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -94,6 +95,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>C:\Users\DJ_Level_3\source\repos\DJ-CPU-Emulator\Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,6 +112,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>C:\Users\DJ_Level_3\source\repos\DJ-CPU-Emulator\Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,6 +129,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>C:\Users\DJ_Level_3\source\repos\DJ-CPU-Emulator\Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,28 +139,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="assembler.cpp" />
-    <ClCompile Include="io.cpp" />
-    <ClCompile Include="processor.cpp" />
-    <ClCompile Include="DJ-CPU-Emulator.cpp" />
-    <ClCompile Include="ramchip.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="assembler.h" />
-    <ClInclude Include="io.h" />
-    <ClInclude Include="processor.h" />
-    <ClInclude Include="main.h" />
-    <ClInclude Include="ramchip.h" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="start.asm" />
     <None Include="div.asm" />
     <None Include="fib.asm" />
     <None Include="pi.asm" />
     <None Include="README.md" />
+    <None Include="URCL\URCLtoISA\output.asm" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ISA.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\assembler.cpp" />
+    <ClCompile Include="Source\DJ-CPU-Emulator.cpp" />
+    <ClCompile Include="Source\io.cpp" />
+    <ClCompile Include="Source\processor.cpp" />
+    <ClCompile Include="Source\ramchip.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\assembler.h" />
+    <ClInclude Include="Headers\io.h" />
+    <ClInclude Include="Headers\main.h" />
+    <ClInclude Include="Headers\processor.h" />
+    <ClInclude Include="Headers\ramchip.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

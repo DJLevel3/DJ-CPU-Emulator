@@ -1,0 +1,59 @@
++-------------------------------------------------------------------------+
+| Feel free to add more cases, this is just the bare minimum.             |
++-------------------------------------------------------------------------+
+
+ADD :: R R R {
+RXA R@B
+ADD R@C
+TXA R@A
+}
+SUB :: R R R {
+RXA R@B
+SUB R@C
+TXA R@A
+}
+NOR :: R R R {
+RXA R@B
+ORR R@C
+TXA R@A
+IMV #65535
+XOR R@A
+TXA R@A
+}
+IMM :: R I {
+IMV #@B
+TXA R@A
+}
+RSH :: R R {
+RXA R@B
+RSH
+TXA R@A
+}
+STR :: R R {
+RAL R@A
+RXA R@B
+STR
+}
+LOD :: R R {
+RAL R@B
+LOD
+TXA R@A
+}
+BGE :: R R R {
+
+}
+OUT :: O A {
+RXA R@2
+IAH #128
+IAL #0
+STR
+}
+IN :: R O {
+IAH #128
+IAL #1
+LOD
+TXA R@1
+}
+HLT :: {
+HLT
+}

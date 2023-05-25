@@ -13,61 +13,67 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Assembly Files">
+      <UniqueIdentifier>{a83d3fab-7387-4885-ae4f-7298ae91e144}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DJ-CPU-Emulator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="processor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ramchip.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="assembler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="io.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="processor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ramchip.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="assembler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="io.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="fib.asm">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="pi.asm">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="div.asm">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="README.md">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="start.asm">
-      <Filter>Source Files</Filter>
+      <Filter>Assembly Files</Filter>
+    </None>
+    <None Include="pi.asm">
+      <Filter>Assembly Files</Filter>
+    </None>
+    <None Include="URCL\URCLtoISA\output.asm">
+      <Filter>Assembly Files</Filter>
+    </None>
+    <None Include="fib.asm">
+      <Filter>Assembly Files</Filter>
+    </None>
+    <None Include="div.asm">
+      <Filter>Assembly Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ISA.txt">
       <Filter>Resource Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\assembler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DJ-CPU-Emulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\io.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\processor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ramchip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\assembler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\processor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\ramchip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
