@@ -84,10 +84,10 @@ GPR map:
 R0 - Zero
 R1 - A
 R2 - B
-R3 - X
-R4 - Y
-R5 - T (temp recommended)
-R6 - U (temp recommended)
+R3 - X 
+R4 - Y 
+R5 - T (caller-saved/volatile temp)
+R6 - U (caller-saved/volatile temp)
 R7 - S (stack pointer recommended)
 
 Fixed registers:

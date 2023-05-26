@@ -21,20 +21,26 @@
     <None Include="README.md">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="start.asm">
+    <None Include="Assembly\start.asm">
       <Filter>Assembly Files</Filter>
     </None>
-    <None Include="pi.asm">
+    <None Include="Assembly\pi.asm">
       <Filter>Assembly Files</Filter>
     </None>
     <None Include="URCL\URCLtoISA\output.asm">
       <Filter>Assembly Files</Filter>
     </None>
-    <None Include="fib.asm">
+    <None Include="Assembly\fib.asm">
       <Filter>Assembly Files</Filter>
     </None>
-    <None Include="div.asm">
+    <None Include="Assembly\div.asm">
       <Filter>Assembly Files</Filter>
+    </None>
+    <None Include="Assembly\subroutine.asm">
+      <Filter>Assembly Files</Filter>
+    </None>
+    <None Include="test.bin">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

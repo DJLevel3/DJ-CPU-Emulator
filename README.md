@@ -16,3 +16,12 @@ memory address and then deletes the jump instructions to leave the start of memo
 The output port is at bus address `0x8000`, but this may change later.
 
 Interrupts are theoretically implemented now, but there's no way to trigger them yet. I'll implement that at some point.
+
+## Examples, Templates, and Libraries
+
+* `fib.asm` - Example - Fibonacci sequence until overflow, then reverse one to output maximum Fibonacci number
+* `pi.asm` - Example - Approximate 1000 * pi by dividing 22000 by 7
+* `div.asm` - Example - Divide 65535 by 51
+* `subroutine.asm` - Example - Stack and subroutine test
+* `start.asm` - Template - Start program at arbitrary address
+* `stack.asm` - Library - Implementations of a stack (empty-stack descending convention) and subroutine calls/returns

@@ -145,6 +145,10 @@ void Program::parse()
             currentInstruction++;
             currentInstruction++;
         }
+        else if (tokens.at(0) == "IMT") {
+            currentInstruction++;
+            currentInstruction++;
+        }
         else if (tokens.at(0) == "IAT") {
             currentInstruction++;
             currentInstruction++;
@@ -162,6 +166,7 @@ void Program::parse()
     }
     currentInstruction = 0;
     for (int i = 0; i < iter; i++) {
+        bool comment = false;
         opc = "NOP";
         reg = 0;
         opr = 0;
@@ -169,7 +174,10 @@ void Program::parse()
         stream = std::stringstream(code.at(i));
 
         while (std::getline(stream, tempString, ' ')) {
-            tokens.push_back(tempString);
+            if (tempString.substr(0,2) == "//") comment = true;
+            if (!comment && tempString.size() > 1) {
+                tokens.push_back(tempString);
+            }
         }
 
         if (tokens.size() == 0) continue;
@@ -211,6 +219,22 @@ void Program::parse()
 
                 opc = "IML";
                 opr = ((unsigned short)(std::stoi(numS)) % 256);
+                reg = 0;
+                instructions.push_back(Instruction(opc, reg, opr));
+                currentInstruction++;
+            }
+            else std::cout << "No operand at " << i << " (skipping)" << std::endl;
+        }
+        else if (tokens.at(0) == "IMT") {
+            if (tokens.size() > 1) {
+                opc = "IMH";
+                opr = (unsigned short)(tags.at(tokens.at(1))) >> 8;
+                reg = 0;
+                instructions.push_back(Instruction(opc, reg, opr));
+                currentInstruction++;
+
+                opc = "IML";
+                opr = (unsigned short)(tags.at(tokens.at(1))) & 255;
                 reg = 0;
                 instructions.push_back(Instruction(opc, reg, opr));
                 currentInstruction++;

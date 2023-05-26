@@ -22,10 +22,10 @@ const bool dumpZeroPage = true;
 const int timescale = 500;
 
 // Filename to read assembly from
-const std::string asmFile = "start.asm";
+std::string asmFile = "subroutine.asm";
 
 // Filename to write binary to
-const std::string binFile = "out.bin";
+std::string binFile = "out.bin";
 
 // Bus write event
 void writeBus(unsigned short address, unsigned short value)
@@ -68,7 +68,6 @@ void runClock() {
 
 int main()
 {
-
     if (verbose) std::cout << "Setup Start!" << std::endl;
     processor = Processor(0);
 
@@ -87,8 +86,19 @@ int main()
         file.close();
     }
     else {
-        if (verbose) std::cout << "Failed to read file" << std::endl;
-        return 1;
+        asmFile = "Assembly/" + asmFile;
+        file = std::ifstream(asmFile, std::ios_base::in);
+        if (file.is_open()) {
+            while (std::getline(file, asmString)) {
+                asmVector.push_back(asmString);
+                if (verbose) std::cout << asmString << std::endl;
+            }
+            file.close();
+        }
+        else {
+            if (verbose) std::cout << "Failed to read assembly file!";
+            return 1;
+        }
     }
 
     if (verbose) std::cout << std::endl;

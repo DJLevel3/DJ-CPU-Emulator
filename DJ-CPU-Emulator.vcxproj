@@ -139,11 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="start.asm" />
-    <None Include="div.asm" />
-    <None Include="fib.asm" />
-    <None Include="pi.asm" />
+    <None Include="Assembly\start.asm" />
+    <None Include="Assembly\div.asm" />
+    <None Include="Assembly\fib.asm" />
+    <None Include="Assembly\pi.asm" />
     <None Include="README.md" />
+    <None Include="Assembly\subroutine.asm" />
+    <None Include="test.bin" />
     <None Include="URCL\URCLtoISA\output.asm" />
   </ItemGroup>
   <ItemGroup>
