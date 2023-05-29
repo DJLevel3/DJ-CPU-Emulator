@@ -61,6 +61,14 @@ RamChip256::RamChip256(unsigned char upper, bool nW, bool nR)
     for (int i = 0; i < 256; i++) memory.push_back(0);
 }
 
+RamChip256::RamChip256(unsigned char upper, bool rom)
+{
+    addressUpper = upper;
+    noRead = false;
+    noWrite = rom;
+    for (int i = 0; i < 256; i++) memory.push_back(0);
+}
+
 RamChip256::RamChip256(unsigned char upper)
 {
     addressUpper = upper;

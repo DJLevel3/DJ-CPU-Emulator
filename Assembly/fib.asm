@@ -8,20 +8,12 @@ ADD R1
 IAT .end
 BRC
 
-IAH #1
-IAL #0
-STR
-
 TXA R1
 TXA R3
 ADD R2
 
 IAT .end
 BRC
-
-IAH #1
-IAL #0
-STR
 
 IAT .loop1
 JMP

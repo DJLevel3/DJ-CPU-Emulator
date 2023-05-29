@@ -22,6 +22,7 @@ public:
     void init(std::vector<unsigned short> initialValues);
 
     RamChip256(unsigned char upper, bool nW, bool nR);
+    RamChip256(unsigned char upper, bool rom);
     RamChip256(unsigned char upper);
     RamChip256();
 private:

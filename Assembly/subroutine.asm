@@ -151,9 +151,7 @@ STR
 IAT .ret
 JMP
 
-NOP
-NOP
-// Data will be at 0x0074
+MEM #1024
 .data1
 NOP
 .data2
@@ -161,7 +159,4 @@ NOP
 .data3
 NOP
 .data4
-NOP
-NOP
-NOP
 NOP

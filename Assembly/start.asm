@@ -1,3 +1,6 @@
+// ========== LEGACY PROGRAM, BREAKS HARDWARE CONVENTIONS ==========
+// For this program to work on real hardware, the zero page should be writeable.
+
 // This program allows code to begin at a memory location other than 0x0000 by
 // jumping to the appropriate location and then erasing the jump instructions
 

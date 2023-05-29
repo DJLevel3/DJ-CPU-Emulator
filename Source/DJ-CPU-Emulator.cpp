@@ -10,22 +10,29 @@ const bool verbose = false;
 const bool writeOut = false;
 
 // Use GUI to display processor internals
-const bool gui = false;
+const bool gui = true;
 
 // Slow down execution
-const bool slowDown = false;
+const bool slowDown = true;
+
+// How much to wait between instructions
+const int timescale = 100;
 
 // Dump zero page after execution ends
 const bool dumpZeroPage = true;
-
-// How much to wait between instructions
-const int timescale = 500;
+const bool dumpOnePage = false;
+const bool dumpTwoPage = false;
+const bool dumpThreePage = false;
+const bool dumpFourPage = true;
+const bool dumpFivePage = false;
+const bool dumpSixPage = false;
+const bool dumpSevenPage = false;
 
 // Filename to read assembly from
 std::string asmFile = "subroutine.asm";
 
 // Filename to write binary to
-std::string binFile = "out.bin";
+std::string binFile = "rom.bin";
 
 // Bus write event
 void writeBus(unsigned short address, unsigned short value)
@@ -45,8 +52,12 @@ void writeBus(unsigned short address, unsigned short value)
 // Bus read event
 unsigned short readBus(unsigned short address)
 {
+    unsigned short port = 0;
     unsigned short bus = 0;
     for (int i = 0; i < 8; i++) bus = bus | lowPages[i].busReadRequested(address);
+    port = portIn.busReadRequested(address);
+    if (port) processor.raiseInterrupt();
+    bus = bus | port;
     bus = bus | page254.busReadRequested(address);
     bus = bus | page255.busReadRequested(address);
     return bus;
@@ -169,9 +180,40 @@ int main()
         std::cout << processor.message2 << std::endl;
     }
 
-    // Dump the zero page after execution
+    // Dump memory after execution
     std::cout << std::endl;
-    if (dumpZeroPage) lowPages[0].dump();
+    if (dumpZeroPage) {
+        std::cout << "Zero Page" << std::endl;
+        lowPages[0].dump();
+    }
+    if (dumpOnePage) {
+        std::cout << "One Page" << std::endl;
+        lowPages[1].dump();
+    }
+    if (dumpTwoPage) {
+        std::cout << "Two Page" << std::endl;
+        lowPages[2].dump();
+    }
+    if (dumpThreePage) {
+        std::cout << "Three Page" << std::endl;
+        lowPages[3].dump();
+    }
+    if (dumpFourPage) {
+        std::cout << "Four Page" << std::endl;
+        lowPages[4].dump();
+    }
+    if (dumpFivePage) {
+        std::cout << "Five Page" << std::endl;
+        lowPages[5].dump();
+    }
+    if (dumpSixPage) {
+        std::cout << "Six Page" << std::endl;
+        lowPages[6].dump();
+    }
+    if (dumpSevenPage) {
+        std::cout << "Seven Page" << std::endl;
+        lowPages[7].dump();
+    }
 
     return 0;
 }

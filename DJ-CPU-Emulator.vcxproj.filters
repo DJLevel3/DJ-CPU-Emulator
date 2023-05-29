@@ -16,6 +16,9 @@
     <Filter Include="Assembly Files">
       <UniqueIdentifier>{a83d3fab-7387-4885-ae4f-7298ae91e144}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Miscellaneous">
+      <UniqueIdentifier>{8b75bbf7-c7f5-41b2-9e39-9c47976c59da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md">
@@ -25,9 +28,6 @@
       <Filter>Assembly Files</Filter>
     </None>
     <None Include="Assembly\pi.asm">
-      <Filter>Assembly Files</Filter>
-    </None>
-    <None Include="URCL\URCLtoISA\output.asm">
       <Filter>Assembly Files</Filter>
     </None>
     <None Include="Assembly\fib.asm">
@@ -42,10 +42,22 @@
     <None Include="test.bin">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Assembly\stack.asm">
+      <Filter>Assembly Files</Filter>
+    </None>
+    <None Include=".gitattributes">
+      <Filter>Miscellaneous</Filter>
+    </None>
+    <None Include=".gitignore">
+      <Filter>Miscellaneous</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ISA.txt">
       <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="LICENSE.txt">
+      <Filter>Miscellaneous</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

@@ -139,17 +139,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
     <None Include="Assembly\start.asm" />
     <None Include="Assembly\div.asm" />
     <None Include="Assembly\fib.asm" />
     <None Include="Assembly\pi.asm" />
+    <None Include="Assembly\stack.asm" />
     <None Include="README.md" />
     <None Include="Assembly\subroutine.asm" />
     <None Include="test.bin" />
-    <None Include="URCL\URCLtoISA\output.asm" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ISA.txt" />
+    <Text Include="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\assembler.cpp" />
