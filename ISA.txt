@@ -34,7 +34,7 @@
  11100  | AJP | XXX |          | Accumulator Jump
  11101  | PKA | XXX |          | Peek Address (Address register -> accumulator)
  11110  | DEC | XXX |          | Decrement Accumulator
- 11111  | HLT | XXX |          | Halt
+ 11111  | HLT | XXX |          | Halt until Interrupt
 --------+-----------+----------+----------------------------------
 
 ===== MICRO-OPS =====
@@ -174,4 +174,4 @@ Pins (on Digilent's Cmod A7 FPGA board):
 
 
 INSTRUCTION LOADING MICROCODE
-PA,IL - PI,AS
+PA,IL - PI

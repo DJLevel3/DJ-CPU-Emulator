@@ -15,7 +15,11 @@ memory address and then deletes the jump instructions to leave the start of memo
 
 The output port is at bus address `0x8000`, but this may change later.
 
-Interrupts are theoretically implemented now, but there's no way to trigger them yet. I'll implement that at some point.
+Interrupts are theoretically implemented now, but there's no way to trigger them yet. I might implement that at some point.
+
+Additionally, the halt instruction completely ends execution here, despite the fact that on the actual processor,
+halts only halt execution until an interrupt is triggered. Programs that require this feature will have to replace halts
+with short loops that loop until an interrupt is triggered.
 
 -----
 

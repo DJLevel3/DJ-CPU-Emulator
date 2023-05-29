@@ -14,7 +14,8 @@ void Processor::raiseInterrupt() {
 
 void Processor::run(bool clock) {
     if (clock == lastClock) return;
-    if (halt) return;
+    if (halt && !interrupt) return;
+    else halt = false;
 
     lastClock = clock;
 
@@ -40,7 +41,7 @@ void Processor::run(bool clock) {
             programCounter++; // PI
         }
         else {
-            actionStep(operand, reg); // AS
+            busAddressLatch = busAddressRegister;
         }
         break;
     case 2:

@@ -148,6 +148,7 @@
     <None Include="Assembly\stack.asm" />
     <None Include="README.md" />
     <None Include="Assembly\subroutine.asm" />
+    <None Include="rom.bin" />
     <None Include="test.bin" />
   </ItemGroup>
   <ItemGroup>
