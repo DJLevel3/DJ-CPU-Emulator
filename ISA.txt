@@ -99,7 +99,7 @@ Fixed registers:
   State Register (1 bit)
 
 Instruction Decoding:
-  Instructions stored as little endian 16-bit numbers, operand then opcode/reg (so IMH 0xFA would be 0xFA08 in the .bin and 16-bit ROM)
+  Instructions stored in as little-endian 16-bit numbers, operand then opcode/reg (so IMH 0xFA would be 0xFA08 in the .bin and 16-bit ROM)
   4 clock cycles per opcode
   1 clock cycle per micro-op
   ops stored bitwise, allowing up to 16 parallel micro-ops

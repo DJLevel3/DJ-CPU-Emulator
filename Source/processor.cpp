@@ -169,13 +169,13 @@ void Processor::actionStep(unsigned short operand, unsigned char reg) {
 
         result = result + carryIn;
 
-        if (leftShift) result = result << 1;
-        if (rightShift) result = result >> 1;
-
         carryFlag = false;
         zeroFlag = false;
         if (result >> 16) carryFlag = true;
         if ((result & 65535) == 0) zeroFlag = true;
+
+        if (leftShift) result = result << 1;
+        if (rightShift) result = result >> 1;
 
         accumulator = (unsigned short)result;
     }
