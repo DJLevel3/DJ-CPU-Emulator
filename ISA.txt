@@ -81,7 +81,7 @@
 Built-in maskable interrupt handling
 
 GPR map:
-R0 - Zero
+R0 - Always zero
 R1 - A
 R2 - B
 R3 - X 
@@ -100,16 +100,13 @@ Fixed registers:
 
 Instruction Decoding:
   Instructions stored in as little-endian 16-bit numbers, operand then opcode/reg (so IMH 0xFA would be 0xFA08 in the .bin and 16-bit ROM)
-  4 clock cycles per opcode
-  1 clock cycle per micro-op
+  5 clock cycles per opcode
   ops stored bitwise, allowing up to 16 parallel micro-ops
     2 micro-op sets (see table above)
 	  I/O ops
 	  Execution ops
-	some micro-ops run on clock rising edge, some on falling edge
-  2 clock cycles fetch/decode the instruction
+  3 clock cycles fetch/decode the instruction
   2 clock cycles run the instruction
-  instruction order: 1-2 1-2
 
 Pins (on Digilent's Cmod A7 FPGA board):
 
