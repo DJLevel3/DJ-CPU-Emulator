@@ -113,6 +113,7 @@ public:
 
     void dumpState();
     unsigned char processorState = 0;
+    int numInstructionsRun = 0;
 private:
     Element document = dbox({
       vbox({
@@ -126,7 +127,6 @@ private:
         Dimension::Fit(document)
     );
 
-    int numInstructionsRun = 0;
 
     bool opLow = false;
     bool addrHigh = false;
@@ -137,7 +137,7 @@ private:
     bool arIn = false;
     bool arLowIn = false;
     bool pcIn = false;
-    bool accInLow = false;
+    bool opHigh = false;
     bool addrOut = false;
     bool mathIn = false;
     bool busOut = false;

@@ -13,10 +13,10 @@ const bool writeOut = false;
 const bool gui = true;
 
 // Slow down execution
-const bool slowDown = true;
+const bool slowDown = false;
 
 // How much to wait between instructions
-const int timescale = 100;
+const int timescale = 10;
 
 // Dump zero page after execution ends
 const bool dumpZeroPage = true;
@@ -179,6 +179,7 @@ int main()
         std::cout << std::endl << processor.message1 << std::endl;
         std::cout << processor.message2 << std::endl;
     }
+    else processor.dumpState();
 
     // Dump memory after execution
     std::cout << std::endl;

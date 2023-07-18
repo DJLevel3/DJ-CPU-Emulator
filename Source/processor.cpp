@@ -53,13 +53,11 @@ void Processor::run(bool clock) {
         // falling edge
         if (microcode1 & 1)    busIn = true;
         if (microcode1 & 4)    mathIn = true;
-        if (microcode1 & 16)   accInLow = true;
         if (microcode1 & 32)   pcIn = true;
-        if (microcode1 & 64)   arLowIn = true;
         if (microcode1 & 128)  arIn = true;
         if (microcode1 & 256)  accIn = true;
         if (microcode1 & 1024) regIn = true;
-        if (microcode1 & 4096) addrHigh = true;
+        if (microcode1 & 4096) opHigh = true;
         break;
     case 6:
         // rising edge
@@ -97,7 +95,7 @@ void Processor::run(bool clock) {
         arIn = false;
         arLowIn = false;
         pcIn = false;
-        accInLow = false;
+        opHigh = false;
         addrOut = false;
         mathIn = false;
         busOut = false;
@@ -129,8 +127,11 @@ void Processor::actionStep(unsigned short operand, unsigned char reg) {
     if (opLow) {
         mathInput = mathInput | operand;
     }
+    if (opHigh) {
+        mathInput = mathInput | (operand << 8);
+    }
     if (regOut) {
-        mathInput = mathInput | ((reg > 0) ? gpr[reg] : 0);
+        mathInput = mathInput | ((reg > 0) ? gpr[reg] : accumulator);
     }
     if (accOut) {
         mathInput = mathInput | accumulator;
@@ -172,12 +173,13 @@ void Processor::actionStep(unsigned short operand, unsigned char reg) {
 
         busAddressRegister = (busAddressRegister & 255);
 
-        busAddressRegister += ((mathInput & 255) << 8);
+        busAddressRegister += ((mathInput >> 8) << 8);
     }
     if (regIn) {
         if (reg > 0) {
             gpr[reg] = mathInput;
         }
+        else accumulator = mathInput;
     }
     if (accIn) {
         accumulator = mathInput;
@@ -193,9 +195,6 @@ void Processor::actionStep(unsigned short operand, unsigned char reg) {
         busAddressRegister = busAddressRegister + (mathInput & 255);
     }
     if (pcIn) programCounter = mathInput;
-    if (accInLow) {
-        accumulator = (accumulator & 0b1111111100000000) + (mathInput % 256);
-    }
 
     if (busIn) {
         busAddressLatch = busAddressRegister;
@@ -208,7 +207,7 @@ void Processor::dumpState() {
     std::ostringstream acc;
     acc << "    " << accumulator << " | 0x" << int_to_hex(accumulator, 4) << " | 0b" << int_to_bin(accumulator, 16) << std::endl;
 
-    std::ostringstream gpr1, gpr2, gpr3, gpr4, gpr5, gpr6, gpr7;
+    std::ostringstream gpr1, gpr2, gpr3, gpr4, gpr5, gpr6, gpr7, executed;
     gpr1 << "    1 - " << gpr[1] << std::endl;
     gpr2 << "    2 - " << gpr[2] << std::endl;
     gpr3 << "    3 - " << gpr[3] << std::endl;
@@ -217,18 +216,20 @@ void Processor::dumpState() {
     gpr6 << "    6 - " << gpr[6] << std::endl;
     gpr7 << "    7 - " << gpr[7] << std::endl;
 
+    executed << "Instructions executed : " << numInstructionsRun << std::endl;
+
     std::ostringstream ins;
     ins << "Instruction: " << binToOp.at(instructionRegister >> 11);
 
     std::ostringstream bar;
-    bar << busAddressRegister;
+    bar << "    " << busAddressRegister;
 
     std::ostringstream pc;
     pc << "    " << programCounter << std::endl;
 
     document = dbox({
         vbox({
-            text(" ========================= PROCESSOR STATE DUMP ========================= "),
+            text(" ============================== PROCESSOR STATE DUMP ============================== "),
             text("Accumulator Value: "),
             text(acc.str()),
             text(""),
@@ -251,6 +252,7 @@ void Processor::dumpState() {
             text(""),
             text(message1),
             text(message2),
+            text(executed.str()),
             text("")
         }) | border
     });

@@ -1,3 +1,5 @@
+### I am currently rewriting the ISA to make it more useful, this new ISA will be INCOMPATIBLE with many old instructions. Beware.
+
 # DJ-CPU-Emulator
 
 Yay! It's a program to emulate my CPU! However, it's unstable, spottily tested, and lacks many QoL features. Beware.

@@ -18,7 +18,7 @@ std::string RamChip256::busWriteRequested(unsigned short busAddress, unsigned sh
 
     if ((busAddress >> 8) == addressUpper) {
         memory[busAddress & 255] = busValue;
-        return "Written: " + std::to_string(busValue) + " @ " + std::to_string(busAddress);
+        return ""; // "Written: " + std::to_string(busValue) + " @ " + std::to_string(busAddress);
     }
     return "";
 }

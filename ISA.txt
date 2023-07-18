@@ -4,21 +4,21 @@
  Opcode | Ins | Reg | Operand  | Function
 --------+-----------+----------+----------------------------------
  00000  | NOP | XXX |          | No Operation
- 00001  | IMH | XXX | IIIIIIII | Immediate High
- 00010  | IML | XXX | IIIIIIII | Immediate Low
- 00011  | LOD | XXX |          | Load from bus
- 00100  | STR | XXX |          | Store to bus
+ 00001  | IMH | RRR | IIIIIIII | Immediate High
+ 00010  | IML | RRR | IIIIIIII | Immediate Low
+ 00011  | LOD | RRR | IIIIIIII | Load from bus (Offset by operand)
+ 00100  | STR | RRR | IIIIIIII | Store to bus (Offset by operand)
  00101  | TXA | RRR |          | Transmit Accumulator
  00110  | RXA | RRR |          | Receive Accumulator
- 00111  | CLA | XXX |          | Clear Accumulator
+ 00111  | CLR | RRR |          | Clear Register
  01000  | JMP | XXX |          | Jump Unconditionally
  01001  | RAL | RRR |          | Register Address Load
- 01010  | AAL | XXX |          | Accumulator Address Load
+!01010  | AAL | XXX |          | Accumulator Address Load
  01011  | IAH | XXX | IIIIIIII | Immediate Address High
  01100  | IAL | XXX | IIIIIIII | Immediate Address Low
  01101  | CLI | XXX |          | Clear Interrupt
  01110  | BRI | XXX |          | Branch if Interrupt
- 01111  | INC | XXX |          | Increment Accumulator
+ 01111  | INC | RRR |          | Increment
  10000  | ADD | RRR |          | Add
  10001  | SUB | RRR |          | Subtract
  10010  | ORR | RRR |          | Logical OR
@@ -30,10 +30,10 @@
  11000  | BRZ | XXX |          | Branch if Zero Flag
  11001  | BRC | XXX |          | Branch if Carry Flag
  11010  | CLF | XXX |          | Clear Flags
- 11011  | PJP | XXX |          | Pointer Jump
- 11100  | AJP | XXX |          | Accumulator Jump
+ 11011  | RLD | RRR |          | Relative Load
+ 11100  | RSR | RRR |          | Relative Store
  11101  | PKA | XXX |          | Peek Address (Address register -> accumulator)
- 11110  | DEC | XXX |          | Decrement Accumulator
+ 11110  | DEC | RRR |          | Decrement
  11111  | HLT | XXX |          | Halt until Interrupt
 --------+-----------+----------+----------------------------------
 
@@ -50,7 +50,7 @@
  AR | Address Register Input
  AL | Address Register Low Input
  PC | Program Counter Input
- SL | Storage (Accumulator) Input Low
+ OH | Operand High Output
  JO | Jump Output (Address Register Output)
  MI | Math Input
  BO | Bus Output
@@ -81,7 +81,7 @@
 Built-in maskable interrupt handling
 
 GPR map:
-R0 - Always zero
+R0 - Accumulator
 R1 - A
 R2 - B
 R3 - X 
@@ -137,8 +137,8 @@ Pins (on Digilent's Cmod A7 FPGA board):
 
 ========== MICROCODE ==========
 00000 - NOP -       - 
-00001 - IMH - OL,AI - AS
-00010 - IML - OL,SL - AS
+00001 - IMH - OH,AI - AS
+00010 - IML - OL,AI - AS
 00011 - LOD - BO,AI - AS
 00100 - STR - AO,BI - AS
 00101 - TXA - AO,RI - AS
@@ -147,7 +147,7 @@ Pins (on Digilent's Cmod A7 FPGA board):
 01000 - JMP - JO,PC - AS
 01001 - RAL - RO,AR - AS
 01010 - AAL - AO,AR - AS
-01011 - IAH - OL,AH - AS
+01011 - IAH - OH,AH - AS
 01100 - IAL - OL,AL - AS
 01101 - CLI -       - IM,AS
 01110 - BRI - JO,PC - EI
